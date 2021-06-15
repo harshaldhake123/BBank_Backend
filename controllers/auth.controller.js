@@ -83,7 +83,7 @@ function userRegistration(req, res, hashedPassword) {
 						process.env.JWT_KEY,
 						function (err, token) {
 							res.status(200).send({
-								message: "signup succesfully!",
+								message: "Signup succesful!",
 								token: token,
 							});
 						}
@@ -132,7 +132,7 @@ function bankRegistration(req, res, hashedPassword) {
 						process.env.JWT_KEY,
 						function (err, token) {
 							res.status(200).send({
-								message: "signup succesfully!",
+								message: "Signup succesful!",
 								token: token,
 							});
 						}
@@ -189,7 +189,7 @@ function login(req, res) {
 
 	var checkExistsQuery;
 	console.log(req.body.category + "   " + req.body.emailId + "   " + req.body.password);
-	
+
 	switch (req.body.category) {
 		case "user":
 			checkExistsQuery = "SELECT emailId,password,userId from userdata where emailId = ?";
@@ -222,7 +222,7 @@ function login(req, res) {
 
 			if (rows[0].valid === 0 && req.body.category==="bbank") {
 				res.status(400).send({
-					message: "BloodBank is Not Verified Yet"
+					message: "BloodBank is not verified yet"
 				});
 			}
 			else{
@@ -233,7 +233,7 @@ function login(req, res) {
 						break;
 					}
 				}
-	
+
 				bcrypt.compare(req.body.password, loginCredentials.password, function (err, result) {
 					if (result) {
 						const token = jwt.sign(
@@ -288,8 +288,8 @@ function adminLogin(req,res) {
 						}
 					);
 				} else {
-					res.status(404).send({ message: "Invalid Credentials" });							
-				}	
+					res.status(404).send({ message: "Invalid Credentials" });
+				}
 			}
 		}
 	});
@@ -311,7 +311,7 @@ async function forgotPassword(req, res) {
 	//salting
 	const salt = await bcrypt.genSaltSync(10);
 	const hashedPassword = await bcrypt.hashSync(req.body.password, salt);
-	
+
 	var updateQuery;
 
 	switch (req.body.category) {

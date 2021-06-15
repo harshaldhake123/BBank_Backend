@@ -8,11 +8,11 @@ const e = require('express');
 
 const schema = joi.object({
     name: joi.string().min(3).required(),
-    email: joi.string().min(6).max(20).required().email(),
+    email: joi.string().min(6).required().email(),
     mobile: joi.string().regex(/^[0-9]{10}$/).messages({'string.pattern.base': 'Phone number must have 10 digits.'}).required(),
     fromDate: joi.date().raw().required(),
     toDate: joi.date().raw().required(),
-    address: joi.string().max(20).required(),
+    address: joi.string().required(),
     pincode: joi.string().max(6).required(),
     city: joi.string().max(20).required(),
     state: joi.string().max(20).required(),
@@ -57,13 +57,13 @@ function registerToCamp(req,res) {
             mysqlConnection.query(insertQuery,
                     [data], (err, rows, fields) => {
                     !err
-                        ? res.status(200).send({ message: "registerd successfully" })
+                        ? res.status(200).send({ message: "Registered successfully" })
                         : res.status(400).send({ message: err });
                 }
             );
         }
         else{
-            res.status(200).send({ message: "Already Registerd" })
+            res.status(200).send({ message: "Already registered" })
         }
     });
 
@@ -121,7 +121,7 @@ function organizeCamp(req, res){
             mysqlConnection.query(insertQuery,
                     [campDetail], (err, rows, fields) => {
                     !err
-						? res.status(200).send({ message: "registerd successfully" })
+                        ? res.status(200).send({ message: "Registered successfully" })
 						: res.status(400).send({ message: err });
                 }
             );

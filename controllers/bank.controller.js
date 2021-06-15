@@ -18,7 +18,8 @@ async function updateProfile(req, res) {
 	var email = req.body.data.email;
 	var password = req.body.password;
 
-	if (password) {
+	if (password !== "undefined") {
+		console.log("here in password");
 		const salt = await bcrypt.genSaltSync(10);
 		const hashedPassword = await bcrypt.hashSync(password, salt);
 
@@ -215,7 +216,7 @@ function validateBloodRequest(req, res) {
 			res.status(200).send({ message: "Request Verified" });
 		} else {
 			console.log("Stock doesn't exists!");
-			return res.status(400).send({ message: "Stock is not available!" });
+			return res.status(400).send({ message: "Stock data unavailable!" });
 		}
 	});
 }

@@ -199,7 +199,7 @@ function plasmaDonorRegister(req, res){
             mysqlConnection.query(insertQuery,
                     [details], (err, rows, fields) => {
                     !err
-						? res.status(200).send({ message: "registerd successfully" })
+						? res.status(200).send({ message: "Registered successfully" })
 						: res.status(400).send({ message: err });
                 }
             );

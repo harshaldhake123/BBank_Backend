@@ -16,7 +16,7 @@ router.put("/updateProfile",checkAuth,userController.updateProfile);
 
 router.post("/addRequest",checkAuth,userController.addRequest);
 router.get("/showRequest",checkAuth,userController.showRequest);
-router.get("/getStock",checkAuth,userController.getStock);
+router.get("/getStock",userController.getStock);
 router.get("/getBloodBanks",functionController.allBankDetails);
 router.get("/getCamp",checkAuth,campController.showCampsToUser);
 

@@ -13,7 +13,7 @@ function allBankDetails(req, res) {
 
 		if (Array.isArray(rows)) {
 			if (rows.length <= 0) {
-				return res.status(204).send({ message: "Blood Banks not available" });
+				return res.status(204).send({ message: "Blood Banks unavailable" });
 			} else {
 				return res.status(200).send(rows);
 			}
@@ -36,7 +36,7 @@ function getCounts(req, res) {
 
 		if (Array.isArray(rows)) {
 			if (rows.length <= 0) {
-				res.status(204).send({ message: "Data not available" });
+				res.status(204).send({ message: "Data unavailable" });
 			} else {
 				console.log(rows);
 				res.status(200).send(rows[0]);

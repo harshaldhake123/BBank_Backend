@@ -10,7 +10,7 @@ function invalidBankDetails(req, res) {
 
 		if (Array.isArray(rows)) {
 			if (rows.length <= 0) {
-				return res.status(204).send({ message: "No new Blood Banks available" });
+				return res.status(204).send({ message: "No new blood banks available" });
 			} else {
 				return res.status(200).send(rows);
 			}
