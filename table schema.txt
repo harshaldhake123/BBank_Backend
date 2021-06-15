@@ -124,9 +124,10 @@ select * from requestdata;
 select * from stockdata;
 select * from registerdata;
 select * from plasmadonordata;
+select * from admindata;
 
 // drop tables //
-
+SET FOREIGN_KEY_CHECKS=0;
 drop table userdata;
 drop table bloodbankdata;
 drop table campdata;
@@ -134,7 +135,8 @@ drop table requestdata;
 drop table stockdata;
 drop table registerdata;
 drop table plasmadonordata;
-
+drop table admindata;
+SET FOREIGN_KEY_CHECKS=1;
 
 // Others //
 
