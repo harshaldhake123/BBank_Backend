@@ -1,0 +1,6 @@
+PORT=5000
+DB_HOST="localhost"
+DB_USER="root"
+DB_PASSWORD=<password>
+MYSQL_DB="bbank_database"
+JWT_KEY=<KEY>

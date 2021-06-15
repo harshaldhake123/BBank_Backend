@@ -1,0 +1,148 @@
+USE heroku_71fd201f7b7d076;
+
+create database bbank_database;
+
+use bbank_database;
+
+CREATE TABLE IF NOT EXISTS userdata(
+    userId int NOT NULL AUTO_INCREMENT,
+    name varchar(40) NOT NULL,
+    emailId varchar(40) NOT NULL,
+    password varchar(100) NOT NULL,
+    mobile varchar(10) NOT NULL,
+    dob varchar(10) NOT NULL,
+    gender varchar(15) NOT NULL,
+    bloodGr varchar(15) NOT NULL,
+    pincode varchar(6) NOT NULL,
+    address varchar(20) NOT NULL,
+    city varchar(20) NOT NULL,
+    state varchar(20) NOT NULL,
+    country varchar(20) NOT NULL,
+    PRIMARY KEY (userId)
+);
+
+
+CREATE TABLE IF NOT EXISTS bloodbankdata(
+    bankId int NOT NULL AUTO_INCREMENT,
+    name varchar(40) NOT NULL,
+    emailId varchar(40) NOT NULL,
+    password varchar(100) NOT NULL,
+    mobile varchar(10) NOT NULL,
+    pincode varchar(6) NOT NULL,
+    address varchar(20) NOT NULL,
+    city varchar(20) NOT NULL,
+    state varchar(20) NOT NULL,
+    country varchar(20) NOT NULL,
+    valid boolean default false,
+    PRIMARY KEY (bankId)
+);
+
+CREATE TABLE IF NOT EXISTS admindata(
+    adminId int NOT NULL AUTO_INCREMENT,
+    emailId varchar(40) NOT NULL,
+    password varchar(128) NOT NULL,
+    PRIMARY KEY (adminId)
+);
+
+insert into admindata(emailId, password) values("admin@gmail.com","7fcf4ba391c48784edde599889d6e3f1e47a27db36ecc050cc92f259bfac38afad2c68a1ae804d77075e8fb722503f3eca2b2c1006ee6f6c7b7628cb45fffd1d");
+
+
+CREATE TABLE IF NOT EXISTS campdata(
+    campId int NOT NULL AUTO_INCREMENT,
+    bankId int NOT NULL,
+    name varchar(40) NOT NULL,
+    emailId varchar(40) NOT NULL,
+    mobile varchar(10) NOT NULL,
+    fromDate varchar(10) NOT NULL,
+    toDate varchar(10) NOT NULL,
+    address varchar(20) NOT NULL,
+    pincode varchar(6) NOT NULL,
+    city varchar(30) NOT NULL,
+    state varchar(30) NOT NULL,
+    country varchar(30) NOT NULL,
+    PRIMARY KEY (campId),
+FOREIGN KEY (bankId) REFERENCES bloodbankdata(bankId)
+);
+
+
+CREATE TABLE IF NOT EXISTS requestdata(
+    requestId int NOT NULL AUTO_INCREMENT,
+    bankId int NOT NULL,
+    userId int NOT NULL,
+    bloodGr varchar(15) NOT NULL,
+    amount int NOT NULL,
+    date varchar(10) NOT NULL,
+    time varchar(20) NOT NULL,
+    status varchar(20) NOT NULL,
+    PRIMARY KEY (requestId),
+    FOREIGN KEY (bankId) REFERENCES bloodbankdata(bankId),
+    FOREIGN KEY (userId) REFERENCES userdata(userId)
+);
+
+
+CREATE TABLE IF NOT EXISTS stockdata(
+    bankId int NOT NULL,
+    Apos int NOT NULL,
+    Aneg int NOT NULL,
+    Bpos int NOT NULL,
+    Bneg int NOT NULL,
+    ABpos int NOT NULL,
+    ABneg int NOT NULL,
+    Opos int NOT NULL,
+    Oneg int NOT NULL,
+    LastUpdated varchar(30),
+    PRIMARY KEY (bankId),
+    FOREIGN KEY (bankId) REFERENCES bloodbankdata(bankId)
+);
+
+CREATE TABLE IF NOT EXISTS registerdata(
+    campId int NOT NULL,
+    userId int NOT NULL,
+    FOREIGN KEY (campId) REFERENCES campdata(campId),
+    FOREIGN KEY (userId) REFERENCES userdata(userId)
+);
+
+CREATE TABLE IF NOT EXISTS plasmadonordata(
+    name varchar(40) NOT NULL,
+    emailId varchar(40) NOT NULL,
+    mobile varchar(10) NOT NULL,
+    bloodGr varchar(15) NOT NULL,
+    dateOfRecovery varchar(10) NOT NULL,
+    address varchar(100) NOT NULL,
+    PRIMARY KEY (emailId)
+);
+
+
+---------------------------------------------------OTHERS----------------------------------------------------------
+
+// show tables //
+
+select * from userdata;
+select * from bloodbankdata;
+select * from campdata;
+select * from requestdata;
+select * from stockdata;
+select * from registerdata;
+select * from plasmadonordata;
+
+// drop tables //
+
+drop table userdata;
+drop table bloodbankdata;
+drop table campdata;
+drop table requestdata;
+drop table stockdata;
+drop table registerdata;
+drop table plasmadonordata;
+
+
+// Others //
+
+UPDATE bloodbankdata
+SET valid = 0
+WHERE bankId=1;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
+
+-------------------------------------------------------------------------------------------------------------------

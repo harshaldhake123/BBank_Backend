@@ -1,0 +1,149 @@
+//****************  blood bank   ************************
+
+bank signup
+
+{
+    "category":"bbank",
+    "bloodBankName":"Raj blood bank",
+    "emailId":"raj@gmail.com",
+    "password":"123456",
+    "mobile":"8007751842",
+    "pincode":"414105",
+    "address":"Shanti nagar",
+    "city":"Pune",
+    "state":"Maharashtra",
+    "country":"India"
+}
+{
+    "category":"bbank",
+    "bloodBankName":"shree blood bank",
+    "emailId":"shree@gmail.com",
+    "password":"123456",
+    "mobile":"1234567890",
+    "pincode":"414105",
+    "address":"Ganesh nagar,Dhayri",
+    "city":"Pune",
+    "state":"Maharashtra",
+    "country":"India"
+}
+
+login
+{
+    "category":"bbank",
+    "emailId":"raj@gmail.com",
+    "password":"123456"
+}
+
+
+update profile
+{
+    "bankId": 1,
+    "name": "Raj blood bank",
+    "emailId": "raj@gmail.com",
+    "mobile": "8007755841",
+    "pincode": "414105"
+}
+
+store stock
+{
+    "Apos":20,
+    "Aneg":20,
+    "Bpos":20,
+    "Bneg":20,
+    "ABpos":20,
+    "ABneg":20,
+    "Opos":20,
+    "Oneg":20
+}
+
+organize camp
+{
+    "name":"Trial 1",
+    "email":"raj1@gmail.com",
+    "mobile":"8007751842",
+    "fromDate":"2021/05/20",
+    "toDate":"2021/05/30",
+    "address":"wadia college campus",
+    "pincode":"414105",
+    "city":"Pune",
+    "state":"Maharashtra",
+    "country":"India"
+}
+{
+    "name":"Trial 2",
+    "email":"raj2@gmail.com",
+    "mobile":"8007751842",
+    "fromDate":"2021/06/1",
+    "toDate":"2021/06/5",
+    "address":"COEP Campus",
+    "pincode":"414105",
+    "city":"Pune",
+    "state":"Maharashtra",
+    "country":"India"
+}
+
+vaidate blood request 
+{
+    "bankId": 2,
+    "userId": 2,
+    "bloodGr": "Apos",
+    "amount": 2
+}
+
+show registration for camp
+{
+    "campId":4
+}
+
+//***********************  user   **********************************
+
+user sign up
+{
+    "category":"user",
+    "userName":"shriram",
+    "emailId":"shriram@gmail.com",
+    "password":"123455",
+    "mobile":"8007751842",
+    "dateofbirth":"1999/08/23",
+    "gender":"male",
+    "bloodGr":"Opos",
+    "pincode":"414105",
+    "address":"Shanti nagar",
+    "city":"Pune",
+    "state":"Maharashtra",
+    "country":"India"
+}
+
+
+login
+{
+    "category":"user",
+    "emailId":"shriram@gmail.com",
+    "password":"123455"
+}
+
+
+request blood 
+{
+    "bankId":2,
+    "bloodGr":"Apos",
+    "amount":2
+}
+
+
+update profile
+{
+    "userId": 1,
+    "name": "shriram rajdeo",
+    "emailId": "rajdeo@gmail.com",
+    "mobile": "8007751842",
+    "dob": "1999/08/23",
+    "gender": "male",
+    "bloodGr": "Opos",
+    "pincode": "414105"
+}
+
+register to camp
+{
+    "campId":2
+}
