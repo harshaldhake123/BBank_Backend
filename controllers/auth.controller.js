@@ -312,8 +312,8 @@ function generateotp(req, res) {
 	let mailTransporter = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
-			user: 'codersam2020@gmail.com',
-			pass: 'CODERsam@2020'
+			user: process.env.EMAIL,
+			pass: process.env.EMAIL_PASSWORD,
 		}
 	});
 
