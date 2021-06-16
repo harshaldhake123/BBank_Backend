@@ -4,6 +4,8 @@ const mysqlConnection = require("../connection");
 const bodyParser = require("body-parser");
 const joi = require("@hapi/joi"); // For Validation
 var sha512 = require('js-sha512').sha512;
+const nodemailer = require('nodemailer');
+var tempTOTP;
 
 const schema = joi.object({
 	category: joi.string().min(3).max(10).required(),
@@ -23,6 +25,7 @@ const schema = joi.object({
 	city: joi.string().max(20),
 	state: joi.string().max(20),
 	country: joi.string().max(20),
+	otp: joi.string().min(6).max(6)
 });
 
 async function signUp(req, res) {
@@ -199,7 +202,7 @@ function login(req, res) {
 			break;
 		case "admin":
 			// code block
-			adminLogin(req,res);
+			adminLogin(req, res);
 			return;
 	}
 
@@ -217,15 +220,15 @@ function login(req, res) {
 			res.status(401).send({
 				message: "Invalid credentials!",
 			});
-		}else {
+		} else {
 			loginCredentials = rows[0];
 
-			if (rows[0].valid === 0 && req.body.category==="bbank") {
+			if (rows[0].valid === 0 && req.body.category === "bbank") {
 				res.status(400).send({
 					message: "BloodBank is not verified yet"
 				});
 			}
-			else{
+			else {
 				var idFromDB;
 				for (var colName in loginCredentials) {
 					if (colName == "bankId" || colName == "userId") {
@@ -262,11 +265,11 @@ function login(req, res) {
 	});
 }
 
-function adminLogin(req,res) {
+function adminLogin(req, res) {
 	givenPassword = sha512(req.body.password);
 	selectQuery = "SELECT * from admindata where emailId = ?";
 
-	mysqlConnection.query(selectQuery, [req.body.emailId],(err, rows, fields) => {
+	mysqlConnection.query(selectQuery, [req.body.emailId], (err, rows, fields) => {
 		if (err) res.status(400).send({ message: err });
 		if (Array.isArray(rows)) {
 			if (rows.length <= 0) {
@@ -276,7 +279,7 @@ function adminLogin(req,res) {
 					const token = jwt.sign(
 						{
 							email: req.body.emailId,
-							id:rows[0].adminId,
+							id: rows[0].adminId,
 							user: req.body.category,
 						},
 						process.env.JWT_KEY,
@@ -302,11 +305,46 @@ function logout(req, res) {
 	return res.redirect("/");
 }
 
+
+function generateotp(req, res) {
+	tempTOTP = "" + Math.floor(Math.random() * 1000000);
+	// console.log(tempTOTP);
+	let mailTransporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: 'codersam2020@gmail.com',
+			pass: 'CODERsam@2020'
+		}
+	});
+
+	let mailDetails = {
+		from: 'Admin BBank App <codersam2020@gmail.com>',
+		to: req.params.email,
+		subject: 'OTP to change password',
+		text: 'Hi, here is your private OTP to change password : ' + tempTOTP + ''
+	};
+
+	mailTransporter.sendMail(mailDetails, function (err, data) {
+		if (err) {
+			console.log('Error Occurs');
+			console.log(err)
+			return res.status(400).send({ message: "Couldn't send OTP, try again later" })
+		} else {
+			// console.log(data);
+			console.log('Email sent successfully');
+			return res.status(200).send({ message: "OTP Sent" })
+		}
+	});
+}
+
 async function forgotPassword(req, res) {
 	//Validate the data
 	const { error } = schema.validate(req.body);
 	if (error) return res.status(400).send({ message: error.details[0].message });
 
+	if (req.body.otp !== tempTOTP) {
+		return res.status(400).send({ message: "Please provid correct OTP" });
+	}
 
 	//salting
 	const salt = await bcrypt.genSaltSync(10);
@@ -324,17 +362,20 @@ async function forgotPassword(req, res) {
 	}
 
 	mysqlConnection.query(
-		updateQuery,[hashedPassword,req.body.emailId],(err,rows,fields)=>{
+		updateQuery, [hashedPassword, req.body.emailId], (err, rows, fields) => {
 			if (err) return res.status(400).send({ message: err });
 		}
 	);
-	return res.status(200).send({ message: "Password Changed"});
+	return res.status(200).send({ message: "Password Changed" });
 }
+
+
 
 
 module.exports = {
 	signUp: signUp,
 	login: login,
 	logout: logout,
-	forgotPassword:forgotPassword,
+	forgotPassword: forgotPassword,
+	generateotp: generateotp,
 };

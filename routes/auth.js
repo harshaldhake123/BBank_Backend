@@ -7,6 +7,7 @@ router.post("/signup", authController.signUp);
 router.post("/login", authController.login);
 router.get("/logout", authController.logout);
 router.post("/forgotpassword", authController.forgotPassword);
+router.get("/generateotp/:email", authController.generateotp);
 
 
 router.get("/checkReauth", function checkAuth(req, res, next) {
