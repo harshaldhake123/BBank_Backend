@@ -48,6 +48,10 @@ function handleConnection() {
 
 		conn.on('error', function (err) {
 			console.log(err.code); // 'ER_BAD_DB_ERROR'
+			conn.destroy();
+			setTimeout(() => {
+				handleConnection();
+			}, 5000);
 		});
 	} catch (e) {
 		console.dir(e);
