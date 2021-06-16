@@ -13,18 +13,18 @@ const cors = require("cors");
 dotenv.config();
 
 //heroku
-app.use(
-	cors({
-		origin: "https://bbankapp.netlify.app",
-	})
-);
-
-//localhost
 // app.use(
 // 	cors({
-// 		origin: "*",
+// 		origin: "https://bbankapp.netlify.app",
 // 	})
 // );
+
+//localhost
+app.use(
+	cors({
+		origin: "*",
+	})
+);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
